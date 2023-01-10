@@ -1,0 +1,46 @@
+/* desktop */
+.toy-filter {
+    margin: 5px;
+}
+
+.toy-filter * {
+    padding: 3px 0;
+}
+
+.toy-filter input {
+    width: 80%;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+}
+
+.toy-filter select {
+    width: 50%;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+button.filter-btn{
+    background-color: var(--dark-turk);
+    height: fit-content;
+    padding: 5px 8px;
+    align-self: center;
+}
+
+button.filter-btn:hover {
+    cursor: pointer;
+    background-color: var(--grays);
+}
+
+  /* tablet */
+@media (max-width: 1060px) {
+    
+}
+
+ /* mobile */
+@media (max-width: 780px) {
+    
+}
+
+

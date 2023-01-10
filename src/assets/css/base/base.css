@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: segoe ui;
+    color: var(--dark-turk);
+    height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+button {
+    border-radius: 10px;
+    border: none;
+    background-color: var(--medium-turk);
+    color: white;
+    padding: 3px 5px;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: var(--grays);
+}
+

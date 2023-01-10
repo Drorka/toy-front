@@ -1,0 +1,14 @@
+.side-bar {
+    flex-grow: 1;
+    width: 25%;
+    height: auto;
+    /* background-color: var(--dark-turk); */
+    /* background-color: #71a1a889; */
+    background-color: #fee69d;
+    margin: 10px 0;
+    border-radius: 8px;
+    /* color: white; */
+}
+
+.side-bar-container {
+}
