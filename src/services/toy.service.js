@@ -47,7 +47,7 @@ function query(filterBy, sortBy) {
 		// Sorting
 		if (sortBy) {
 			console.log('service', sortBy)
-			if (sortBy.sortByCat === 'createdAt') {
+			if (sortBy.sortByCat === 'createdAt' || sortBy.sortByCat === 'price') {
 				filteredToys.sort(
 					(b1, b2) =>
 						(b1[sortBy.sortByCat] - b2[sortBy.sortByCat]) * sortBy.desc

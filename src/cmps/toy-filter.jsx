@@ -31,7 +31,7 @@ export function ToyFilter({ onSetFilter, onSetSort }) {
 	function handleSortChange({ target }) {
 		console.log('filter handle sort', target.value)
 		let { value, name: field, type } = target
-		value = type === 'checkbox' ? (target.checked ? -1 : 1) : value
+		value = type === 'number' ? +value : value
 		setSortToys((prevSort) => ({ ...prevSort, [field]: value }))
 	}
 
@@ -86,18 +86,27 @@ export function ToyFilter({ onSetFilter, onSetSort }) {
 								<option value="">Sort By</option>
 								<option value="name">Name</option>
 								<option value="createdAt">Date created</option>
+								<option value="price">Price</option>
 							</select>
 						</div>
 
 						<div>
-							<label htmlFor="desc">Descending:</label>
-							<input
+							<select name="desc" id="desc" onChange={handleSortChange}>
+								<option value="">Sort order</option>
+								<option type="number" value="1">
+									Ascending
+								</option>
+								<option type="number" value="-1">
+									Descending
+								</option>
+							</select>
+							{/* <input
 								name="desc"
 								id="desc"
 								type="checkbox"
 								value={sortToys.desc}
 								onChange={handleSortChange}
-							/>
+							/> */}
 							{/* <label htmlFor="order">Sort order</label>
 							<select
 								name="order"
