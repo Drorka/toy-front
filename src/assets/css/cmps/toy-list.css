@@ -37,17 +37,6 @@
     background-color: var(--reds);
 }
 
-button.add-btn{
-    background-color: var(--dark-turk);
-    padding: 5px 8px;
-}
-
-button.add-btn:hover {
-    cursor: pointer;
-    background-color: var(--grays);
-}
-
-
   /* tablet */
 @media (max-width: 1060px) {
     .list-grid {

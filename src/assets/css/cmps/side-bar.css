@@ -10,5 +10,14 @@
     /* color: white; */
 }
 
-.side-bar-container {
+button.add-btn{
+    background-color: var(--dark-turk);
+    padding: 5px 8px;
+    margin: auto;
+    margin-top: 5px;
+}
+
+button.add-btn:hover {
+    cursor: pointer;
+    background-color: var(--grays);
 }
