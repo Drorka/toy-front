@@ -7,8 +7,13 @@ export function ToyList({ toys, onRemoveToy, onEditToy }) {
 		<section className="toy-list">
 			<ul className="clean-list grid list-grid">
 				{toys.map((toy) => (
-					<li className="preview-container" key={toy._id}>
-						<ToyPreview toy={toy} />
+					<li
+						className="preview-container flex column space-between"
+						key={toy._id}
+					>
+						<div>
+							<ToyPreview toy={toy} />
+						</div>
 
 						<div>
 							<button

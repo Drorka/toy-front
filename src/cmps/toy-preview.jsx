@@ -21,15 +21,15 @@ export function ToyPreview({ toy }) {
 
 	return (
 		<article className="toy-preview">
-			<h4 className={toyStatus}>{toy.name}</h4>
+			<h4 className="">{toy.name}</h4>
 			<p className="toy-price">${toy.price}</p>
 			<img
 				className="toy-img"
 				src={require(`../assets/img/${imgUrl}`)}
 				alt=""
 			/>
+			<p className={toyStatus + ' toyStatus'}>{toyStatus}</p>
 			<p className="toy-labels">{formattedLabels}</p>
-			<p className="toyStatus">{toyStatus}</p>
 		</article>
 	)
 }
