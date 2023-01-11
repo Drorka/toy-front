@@ -1,0 +1,51 @@
+// .details-grid {
+//     gap: 10px;
+//     margin: 0 auto;
+//     grid-template-columns: 1fr 1fr;
+//     grid-template-rows: 1fr 1fr 1fr;
+// }
+
+.toy-details {
+    
+    .toy-details-content{
+    border: 1px solid var(--medium-turk);
+    border-radius: 8px;
+    }
+
+    .toy-details-txt {
+        margin: 10px;
+
+        .toyStatus, .toy-labels {
+            text-transform: capitalize;
+        }
+    
+        .toyStatus {
+            color: white;
+            width: fit-content;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+    
+        .available {
+            background-color: var(--greens);
+        }
+    
+        .unavailable {
+            background-color: var(--reds);
+        }
+    }
+
+    .toy-details-img {
+        margin: 10px;
+        padding: 5px;
+        
+        img {
+            max-width: 250px;
+        }
+    }
+
+    .toy-details-actions {
+        margin-top: 10px;
+    }
+
+}

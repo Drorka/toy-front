@@ -62,63 +62,65 @@ export function ToyEdit() {
 	return (
 		<section className="toy-edit main-layout">
 			<h1>Edit {toyToEdit.name}</h1>
-			<div className="toy-details-img">
-				<img src={require(`../assets/img/${imgUrl}`)} alt="" />
+			<div className="toy-edit-content flex">
+				<form onSubmit={onSubmit}>
+					<table>
+						<tbody>
+							<tr>
+								<td>Name</td>
+								<td>
+									<input
+										type="text"
+										name="name"
+										id="name"
+										placeholder="Enter name..."
+										defaultValue={toyToEdit.name}
+										onChange={handleChange}
+									/>
+								</td>
+							</tr>
+							<tr>
+								<td>Price</td>
+								<td>
+									<input
+										type="text"
+										name="price"
+										id="price"
+										placeholder="Enter price..."
+										defaultValue={toyToEdit.price}
+										onChange={handleChange}
+									/>
+								</td>
+							</tr>
+							<tr>
+								<td>Status</td>
+								<td>
+									<select
+										name="inStock"
+										id="inStock"
+										type="boolean"
+										onChange={handleBooleanChange}
+									>
+										<option selected disabled hidden>
+											{`${toyToEdit.inStock ? 'Available' : 'Unavailable'}`}
+										</option>
+										<option value="false">Unavailable</option>
+										<option value="true">Available</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<button>Submit</button>
+				</form>
+
+				<div className="toy-edit-img">
+					<img src={require(`../assets/img/${imgUrl}`)} alt="" />
+				</div>
 			</div>
 
-			<form onSubmit={onSubmit}>
-				<table>
-					<tbody>
-						<tr>
-							<td>Name</td>
-							<td>
-								<input
-									type="text"
-									name="name"
-									id="name"
-									placeholder="Enter name..."
-									defaultValue={toyToEdit.name}
-									onChange={handleChange}
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>Price</td>
-							<td>
-								<input
-									type="text"
-									name="price"
-									id="price"
-									placeholder="Enter price..."
-									defaultValue={toyToEdit.price}
-									onChange={handleChange}
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>Status</td>
-							<td>
-								<select
-									name="inStock"
-									id="inStock"
-									type="boolean"
-									onChange={handleBooleanChange}
-								>
-									<option selected disabled hidden>
-										{`${toyToEdit.inStock ? 'Available' : 'Unavailable'}`}
-									</option>
-									<option value="false">Unavailable</option>
-									<option value="true">Available</option>
-								</select>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<button>Submit</button>
-			</form>
-
-			<div>
+			<div className="toy-edit-actions">
 				<button className="del-btn" onClick={onRemoveToy}>
 					Delete Toy
 				</button>

@@ -10,7 +10,8 @@ import { AppFooter } from './cmps/app-footer'
 import { ToyDetails } from './views/toy-details'
 import { ToyEdit } from './views/toy-edit'
 
-import './assets/css/main.css'
+// import './assets/css/main.css'
+import './assets/scss/styles.scss'
 
 export function App() {
 	return (

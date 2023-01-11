@@ -1,0 +1,30 @@
+.toy-preview {
+
+    .toy-img {
+        margin: auto;
+    }
+
+    .toyStatus, .toy-labels {
+        text-transform: capitalize;
+    }
+
+    .toyStatus {
+        color: white;
+        width: fit-content;
+        padding: 2px 8px;
+        border-radius: 10px;
+    }
+
+    .available {
+        background-color: var(--greens);
+    }
+
+    .unavailable {
+        background-color: var(--reds);
+    }
+
+    .toy-labels {
+        text-transform: capitalize;
+    }
+
+}

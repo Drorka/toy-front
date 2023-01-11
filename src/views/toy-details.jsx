@@ -24,24 +24,36 @@ export function ToyDetails() {
 
 	if (!toy) return <h1>loadings....</h1>
 
+	const toyStatus = toy.inStock ? 'available' : 'unavailable'
+	let formattedLabels = toy.labels.toString()
+
 	return (
-		<section className="toy-details main-layout">
+		<section className="toy-details main-layout flex column">
 			<h1>{toy.name}</h1>
-			{/* <h2>{toy.description}</h2> */}
-			<p>
-				Price: <span>${toy.price}</span>
-			</p>
-			<p>
-				Status: <span>{toy.inStock ? 'Available' : 'Unavailable'}</span>
-			</p>
-			<div className="toy-details-img">
-				<img src={require(`../assets/img/${imgUrl}`)} alt="" />
+			<div className="toy-details-content flex">
+				<div className="toy-details-txt">
+					<p>
+						Price: <span>${toy.price}</span>
+					</p>
+					<p>
+						Status:{' '}
+						<span className={toyStatus + ' toyStatus'}>{toyStatus}</span>
+					</p>
+					<p>
+						Created at: <span>{utilService.convertDate(toy)}</span>
+					</p>
+					<p>
+						Labels: <span>{formattedLabels}</span>
+					</p>
+				</div>
+				<div className="toy-details-img">
+					<img src={require(`../assets/img/${imgUrl}`)} alt="" />
+				</div>
 			</div>
-			<p>
-				Created at: <span>{utilService.convertDate(toy)}</span>
-			</p>
-			<div>
-				<Link to={`/toy/edit/${toy._id}`}>Edit Toy</Link> |
+			<div className="toy-details-actions">
+				<button>
+					<Link to={`/toy/edit/${toy._id}`}>Edit Toy</Link>
+				</button>
 				<Link to="/toy"> Back to all toys</Link>
 			</div>
 		</section>

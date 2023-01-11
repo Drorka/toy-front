@@ -1,0 +1,47 @@
+
+
+/* desktop */
+header {
+    background: var(--dark-turk);
+    color: white;
+    /* border-bottom: 2px solid white; */
+    height: 3rem;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: var(--l);
+	margin-left: auto;
+	margin-right: auto;
+
+    .logo {
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    nav a {
+        margin: .5em;
+    }
+
+    nav a.active {
+        color: var(--medium-turk);
+        font-weight: bold;
+    }
+}
+
+  /* tablet */
+@media (max-width: 1060px) {
+    .header-container {
+		max-width: var(--m);
+    }
+}
+
+ /* mobile */
+@media (max-width: 780px) {
+    .header-container {
+        max-width: var(--s);
+    }
+}
+
