@@ -33,6 +33,11 @@ export function ToyFilter({ onSetFilter, onSetSort }) {
 		setSortToys((prevSort) => ({ ...prevSort, [field]: value }))
 	}
 
+	function onClearFilters() {
+		setFilterToys((prevFilter) => toyService.getDefaultFilter())
+		setSortToys((prevSort) => toyService.getDefaultSort())
+	}
+
 	// function onSubmitFilter(ev) {
 	// 	// update father cmp that filters change on submit
 	// 	ev.preventDefault()
@@ -117,7 +122,13 @@ export function ToyFilter({ onSetFilter, onSetSort }) {
 							</select> */}
 						</div>
 					</div>
-					<button className="filter-btn">Apply filters</button>
+					{/* <button className="filter-btn">Apply filters</button> */}
+					<button
+						onClick={onClearFilters}
+						className="clear-filter-btn filter-btn"
+					>
+						Clear all filters
+					</button>
 				</form>
 			</div>
 		</section>

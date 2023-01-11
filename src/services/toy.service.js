@@ -90,9 +90,27 @@ export const toyService = {
 // *
 
 function query(filterBy, sortBy) {
-	const queryParams = `?name=${filterBy.name}`
+	const queryParams = `?name=${filterBy.name}&inStock=${filterBy.inStock}&labels=${filterBy.labels}`
 	console.log('service queryParams', queryParams)
-	return httpService.get(BASE_URL + queryParams)
+	return httpService.get(BASE_URL + queryParams).then((toys) => {
+		let filteredToys = toys
+		// Sorting
+		if (sortBy) {
+			console.log('service', sortBy)
+			if (sortBy.sortByCat === 'createdAt' || sortBy.sortByCat === 'price') {
+				filteredToys.sort(
+					(b1, b2) =>
+						(b1[sortBy.sortByCat] - b2[sortBy.sortByCat]) * sortBy.desc
+				)
+			}
+			if (sortBy.sortByCat === 'name') {
+				filteredToys.sort(
+					(b1, b2) => b1.name.localeCompare(b2.name) * sortBy.desc
+				)
+			}
+		}
+		return filteredToys
+	})
 }
 
 // function query(filterBy = getDefaultFilter()) {
