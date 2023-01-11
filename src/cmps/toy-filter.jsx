@@ -10,13 +10,11 @@ export function ToyFilter({ onSetFilter, onSetSort }) {
 	onSetFilter = useRef(utilService.debounce(onSetFilter))
 
 	useEffect(() => {
-		console.log('filter filterToys', filterToys)
 		// update father cmp that filters change very type
 		onSetFilter.current(filterToys)
 	}, [filterToys])
 
 	useEffect(() => {
-		console.log('filter sortToys', sortToys)
 		// update father cmp that filters change very type
 		onSetSort(sortToys)
 	}, [sortToys])

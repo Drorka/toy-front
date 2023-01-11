@@ -11,8 +11,6 @@ export function sortReducer(state = initialState, action) {
 	switch (action.type) {
 		// * sort
 		case SET_SORT:
-			console.log('reducer', action)
-			console.log('reducer', action.sortToys)
 			return { ...state, sortBy: action.sortToys }
 
 		default:

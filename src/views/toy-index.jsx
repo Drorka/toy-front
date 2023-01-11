@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import {
 	loadToys,
@@ -19,6 +20,7 @@ export function ToyIndex() {
 	const filterBy = useSelector((storeState) => storeState.filterModule.filterBy)
 	const sortBy = useSelector((storeState) => storeState.sortModule.sortBy)
 	// const isLoading = useSelector((storeState) => storeState.toyModule.isLoading)
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		loadToys(filterBy, sortBy)
@@ -36,10 +38,13 @@ export function ToyIndex() {
 		removeToy(toyId)
 			.then(() => {
 				// showSuccessMsg('Toy removed')
+				navigate('/toy')
 			})
 			.catch((err) => {
 				// showErrorMsg('Cannot remove toy')
+				navigate('/toy')
 			})
+		navigate('/toy')
 	}
 
 	// function onAddToy() {

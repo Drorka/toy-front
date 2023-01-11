@@ -11,8 +11,6 @@ export function filterReducer(state = initialState, action) {
 	switch (action.type) {
 		// * filter
 		case SET_FILTER:
-			console.log('store', action)
-			console.log('store', action.filterToys)
 			return { ...state, filterBy: action.filterToys }
 
 		default:

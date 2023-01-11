@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 
 // import { showErrorMsg } from '../services/event-bus.service.js'
 import { toyService } from '../services/toy.service'
@@ -8,6 +8,7 @@ import { removeToy, saveToy } from '../store/toy.action'
 export function ToyEdit() {
 	const { toyId } = useParams()
 	const [toyToEdit, setToyToEdit] = useState(toyService.getEmptyToy())
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		if (!toyId) return
@@ -42,7 +43,16 @@ export function ToyEdit() {
 	}
 
 	function onRemoveToy() {
-		removeToy(toyToEdit)
+		removeToy(toyId)
+			.then(() => {
+				// showSuccessMsg('Toy removed')
+				navigate('/toy')
+			})
+			.catch((err) => {
+				// showErrorMsg('Cannot remove toy')
+				navigate('/toy')
+			})
+		navigate('/toy')
 	}
 
 	const imgUrl = 'Furby_picture.jpg'
