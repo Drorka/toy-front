@@ -12,7 +12,19 @@ import {
 import { SET_FILTER } from './filter.reducer'
 import { SET_SORT } from './sort.reducer'
 
-export function loadToys(filterBy, sortBy) {
+export function loadToys(filterBy) {
+	return toyService
+		.query(filterBy)
+		.then((toys) => {
+			store.dispatch({ type: SET_TOYS, toys })
+		})
+		.catch((err) => {
+			console.log('Had issues loading toys', err)
+			throw err
+		})
+}
+
+export function loadToysNormal(filterBy, sortBy) {
 	store.dispatch({ type: SET_IS_LOADING, isLoading: true })
 	return toyService
 		.query(filterBy, sortBy)

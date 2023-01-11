@@ -7,6 +7,7 @@ export function AppHeader() {
 				<span className="logo">My Toy App</span>
 				<nav>
 					<NavLink to="/">Home</NavLink> |<NavLink to="/toy">Toys</NavLink> |
+					<NavLink to="/dashboard">Dashboard</NavLink>
 				</nav>
 			</div>
 		</header>

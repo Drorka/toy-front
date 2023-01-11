@@ -90,7 +90,7 @@ export const toyService = {
 // * HTTPS CRUDL
 // *
 
-function query(filterBy, sortBy) {
+function query(filterBy = getDefaultFilter(), sortBy = getDefaultSort()) {
 	const queryParams = `?name=${filterBy.name}&inStock=${filterBy.inStock}&labels=${filterBy.labels}`
 	console.log('service queryParams', queryParams)
 	return httpService.get(BASE_URL + queryParams).then((toys) => {

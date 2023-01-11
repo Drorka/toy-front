@@ -9,6 +9,7 @@ import { AppHeader } from './cmps/app-header'
 import { AppFooter } from './cmps/app-footer'
 import { ToyDetails } from './views/toy-details'
 import { ToyEdit } from './views/toy-edit'
+import { ToyDashboard } from './views/toy-dashboard'
 
 // import './assets/css/main.css'
 import './assets/scss/styles.scss'
@@ -26,6 +27,7 @@ export function App() {
 							<Route path="/toy/:toyId" element={<ToyDetails />} />
 							<Route path="/toy/edit/:toyId" element={<ToyEdit />} />
 							<Route path="/toy/edit/" element={<ToyEdit />} />
+							<Route path="/dashboard" element={<ToyDashboard />} />
 						</Routes>
 					</main>
 					{/* <AppFooter /> */}
