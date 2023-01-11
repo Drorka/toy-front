@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import Select from 'react-select'
 
 import { toyService } from '../services/toy.service'
 import { utilService } from '../services/util.service'
@@ -6,6 +7,7 @@ import { utilService } from '../services/util.service'
 export function ToyFilter({ onSetFilter, onSetSort }) {
 	const [filterToys, setFilterToys] = useState(toyService.getDefaultFilter())
 	const [sortToys, setSortToys] = useState(toyService.getDefaultSort())
+	const [selectedOptions, setSelectedOptions] = useState()
 
 	onSetFilter = useRef(utilService.debounce(onSetFilter))
 
@@ -26,6 +28,13 @@ export function ToyFilter({ onSetFilter, onSetSort }) {
 		setFilterToys((prevFilter) => ({ ...prevFilter, [field]: value }))
 	}
 
+	function handleSelect(labels) {
+		setSelectedOptions(labels)
+		const labelsToSet = labels.length ? labels.map((i) => i.value) : []
+		console.log(labelsToSet)
+		setFilterToys((prevFilter) => ({ ...prevFilter, labels: labelsToSet }))
+	}
+
 	function handleSortChange({ target }) {
 		console.log('filter handle sort', target.value)
 		let { value, name: field, type } = target
@@ -34,8 +43,8 @@ export function ToyFilter({ onSetFilter, onSetSort }) {
 	}
 
 	function onClearFilters() {
-		setFilterToys((prevFilter) => toyService.getDefaultFilter())
-		setSortToys((prevSort) => toyService.getDefaultSort())
+		setFilterToys(() => toyService.getDefaultFilter())
+		setSortToys(() => toyService.getDefaultSort())
 	}
 
 	// function onSubmitFilter(ev) {
@@ -74,6 +83,17 @@ export function ToyFilter({ onSetFilter, onSetSort }) {
 								<option value="available">Available toys</option>
 								<option value="unavailable">Unavailable toys</option>
 							</select>
+						</div>
+						<div className="">
+							<Select
+								options={toyService
+									.getToyLabels()
+									.map((label) => ({ value: label, label }))}
+								placeholder="Select labels"
+								value={selectedOptions}
+								onChange={handleSelect}
+								isMulti={true}
+							/>
 						</div>
 					</div>
 

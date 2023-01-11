@@ -15,6 +15,7 @@ export const toyService = {
 	getEmptyToy,
 	getDefaultFilter,
 	getDefaultSort,
+	getToyLabels,
 }
 
 // *
@@ -153,24 +154,27 @@ function save(toy) {
 // *
 
 function getDefaultFilter() {
-	return { name: '', labels: '', inStock: 'all' }
+	return { name: '', labels: [], inStock: 'all' }
 }
 
 function getDefaultSort() {
 	return { sortByCat: '', desc: 1 }
 }
 
-const labels = [
-	'On wheels',
-	'Box game',
-	'Art',
-	'Baby',
-	'Doll',
-	'Puzzle',
-	'Outdoor',
-	'Battery Powered',
-	'Cards',
-]
+function getToyLabels() {
+	const labels = [
+		'On wheels',
+		'Box game',
+		'Art',
+		'Baby',
+		'Doll',
+		'Puzzle',
+		'Outdoor',
+		'Battery Powered',
+		'Cards',
+	]
+	return labels
+}
 
 // function createToys() {
 // 	let toys = _loadFromStorage(STORAGE_KEY) || [
