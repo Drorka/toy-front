@@ -12,7 +12,20 @@ import {
 import { SET_FILTER } from './filter.reducer'
 import { SET_SORT } from './sort.reducer'
 
-export function loadToys(filterBy) {
+export async function loadToys(filterBy) {
+	try {
+		const toys = await toyService.query(filterBy)
+		store.dispatch({ type: SET_TOYS, toys })
+		return toys
+	} catch (err) {
+		console.log('toy.action: Had issues loading toys', err)
+		throw err
+	} finally {
+		console.log('toy.action: loadToys is done')
+	}
+}
+
+export function loadToysOptimisticOld(filterBy) {
 	return toyService
 		.query(filterBy)
 		.then((toys) => {
@@ -41,16 +54,29 @@ export function loadToysNormal(filterBy, sortBy) {
 }
 
 // Example for Optimistic mutation:
-export function removeToy(toyId) {
+export async function removeToyOptimistic(toyId) {
 	store.dispatch({ type: REMOVE_TOY, toyId })
-	return toyService.remove(toyId).catch((err) => {
+	try {
+		return await toyService.remove(toyId)
+	} catch (err) {
 		store.dispatch({ type: UNDO_REMOVE_TOY })
 		console.log('Had issues Removing toy', err)
 		throw err
-	})
+	}
 }
 
-export function removeToyNormal(toyId) {
+export async function removeToyNormal(toyId) {
+	try {
+		await toyService.remove(toyId)
+		store.dispatch({ type: REMOVE_TOY, toyId })
+		return toyId
+	} catch (err) {
+		console.log('Had issues Removing toy', err)
+		throw err
+	}
+}
+
+export function removeToyNormalOld(toyId) {
 	return toyService
 		.remove(toyId)
 		.then(() => {
@@ -62,7 +88,19 @@ export function removeToyNormal(toyId) {
 		})
 }
 
-export function saveToy(toy) {
+export async function saveToy(toy) {
+	const type = toy._id ? UPDATE_TOY : ADD_TOY
+	try {
+		const savedToy = await toyService.save(toy)
+		store.dispatch({ type, toy: savedToy })
+		return savedToy
+	} catch (err) {
+		console.log('Cannot save toy:', err)
+		throw err
+	}
+}
+
+export function saveToyOld(toy) {
 	const type = toy._id ? UPDATE_TOY : ADD_TOY
 	return toyService
 		.save(toy)

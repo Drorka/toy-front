@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 import { loadToys } from '../store/toy.action'
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-import { Doughnut } from 'react-chartjs-2'
 
 import { LabelsCountChart } from '../cmps/dashboard-labels-count'
 import { LabelsPriceChart } from '../cmps/dashboard-labels-price'

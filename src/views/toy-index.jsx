@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import {
 	loadToys,
-	removeToy,
+	removeToyNormal,
 	saveToy,
 	setFilter,
 	setSort,
@@ -34,8 +34,21 @@ export function ToyIndex() {
 		setSort(sortToys)
 	}
 
-	function onRemoveToy(toyId) {
-		removeToy(toyId)
+	async function onRemoveToy(toyId) {
+		try {
+			await removeToyNormal(toyId)
+			// showSuccessMsg('Toy removed')
+			console.log('removed successfully')
+			navigate('/toy')
+		} catch (err) {
+			// showErrorMsg('Cannot remove toy')
+			console.log('failed to remove')
+			navigate('/toy')
+		}
+	}
+
+	function onRemoveToyOld(toyId) {
+		removeToyNormal(toyId)
 			.then(() => {
 				// showSuccessMsg('Toy removed')
 				navigate('/toy')
@@ -59,7 +72,20 @@ export function ToyIndex() {
 	// 		})
 	// }
 
-	function onEditToy(toy) {
+	async function onEditToy(toy) {
+		const title = prompt('New title?')
+		const toyToSave = { ...toy, title }
+		try {
+			const savedToy = await saveToy(toyToSave)
+			console.log('on edit success', savedToy)
+			// showSuccessMsg(`Toy updated to price: $${savedToy.title}`)
+		} catch (err) {
+			console.log('on edit failed', err)
+			// showErrorMsg('Cannot update toy')
+		}
+	}
+
+	function onEditToyOld(toy) {
 		const title = prompt('New title?')
 		const toyToSave = { ...toy, title }
 		saveToy(toyToSave)

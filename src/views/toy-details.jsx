@@ -10,15 +10,28 @@ export function ToyDetails() {
 	const [toy, setToy] = useState(null)
 
 	useEffect(() => {
-		toyService
-			.getById(toyId)
-			.then((toy) => {
-				setToy(toy)
-			})
-			.catch((err) => {
-				// showErrorMsg('Cannot load toy')
-			})
+		loadToy()
 	}, [])
+
+	async function loadToy() {
+		try {
+			const toy = await toyService.getById(toyId)
+			setToy(toy)
+		} catch (err) {
+			console.log('failed', err)
+		}
+	}
+
+	// useEffect(() => {
+	// 	toyService
+	// 		.getById(toyId)
+	// 		.then((toy) => {
+	// 			setToy(toy)
+	// 		})
+	// 		.catch((err) => {
+	// 			// showErrorMsg('Cannot load toy')
+	// 		})
+	// }, [])
 
 	const imgUrl = 'Furby_picture.jpg'
 

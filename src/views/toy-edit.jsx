@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 
 // import { showErrorMsg } from '../services/event-bus.service.js'
 import { toyService } from '../services/toy.service'
-import { removeToy, saveToy } from '../store/toy.action'
+import { removeToyNormal, saveToy } from '../store/toy.action'
 
 export function ToyEdit() {
 	const { toyId } = useParams()
@@ -11,16 +11,30 @@ export function ToyEdit() {
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		if (!toyId) return
-		toyService
-			.getById(toyId)
-			.then((toyToEdit) => {
-				setToyToEdit(toyToEdit)
-			})
-			.catch((err) => {
-				// showErrorMsg('Cannot load toy')
-			})
+		loadToy()
 	}, [])
+
+	async function loadToy() {
+		if (!toyId) return
+		try {
+			const toyToEdit = await toyService.getById(toyId)
+			setToyToEdit(toyToEdit)
+		} catch (err) {
+			console.log('failed', err)
+		}
+	}
+
+	// useEffect(() => {
+	// 	if (!toyId) return
+	// 	toyService
+	// 		.getById(toyId)
+	// 		.then((toyToEdit) => {
+	// 			setToyToEdit(toyToEdit)
+	// 		})
+	// 		.catch((err) => {
+	// 			// showErrorMsg('Cannot load toy')
+	// 		})
+	// }, [])
 
 	function handleChange({ target }) {
 		let { value, type, name: field } = target
@@ -42,8 +56,21 @@ export function ToyEdit() {
 		console.log('success!')
 	}
 
-	function onRemoveToy() {
-		removeToy(toyId)
+	async function onRemoveToy() {
+		try {
+			await removeToyNormal(toyId)
+			// showSuccessMsg('Toy removed')
+			console.log('removed successfully')
+			navigate('/toy')
+		} catch (err) {
+			// showErrorMsg('Cannot remove toy')
+			console.log('failed to remove')
+			navigate('/toy')
+		}
+	}
+
+	function onRemoveToyOld() {
+		removeToyNormal(toyId)
 			.then(() => {
 				// showSuccessMsg('Toy removed')
 				navigate('/toy')
