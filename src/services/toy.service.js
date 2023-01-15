@@ -1,6 +1,7 @@
 import { asyncStorageService } from './async-storage.service'
 import { utilService } from './util.service'
 import { httpService } from './http.service'
+import { userService } from './user.service.js'
 
 const STORAGE_KEY = 'toyDB'
 const BASE_URL = 'toy/'
@@ -16,7 +17,11 @@ export const toyService = {
 	getDefaultFilter,
 	getDefaultSort,
 	getToyLabels,
+	addMsgToToy,
+	getEmptyMsg,
+	removeToyMsg,
 }
+window.cs = toyService
 
 // *
 // * LOCAL CRUDL
@@ -90,42 +95,36 @@ export const toyService = {
 // * HTTPS CRUDL
 // *
 
-function query(filterBy = getDefaultFilter(), sortBy = getDefaultSort()) {
-	const queryParams = `?name=${filterBy.name}&inStock=${filterBy.inStock}&labels=${filterBy.labels}`
-	console.log('service queryParams', queryParams)
-	return httpService.get(BASE_URL + queryParams).then((toys) => {
-		let filteredToys = toys
-		// Sorting
-		if (sortBy) {
-			console.log('service', sortBy)
-			if (sortBy.sortByCat === 'createdAt' || sortBy.sortByCat === 'price') {
-				filteredToys.sort(
-					(b1, b2) =>
-						(b1[sortBy.sortByCat] - b2[sortBy.sortByCat]) * sortBy.desc
-				)
-			}
-			if (sortBy.sortByCat === 'name') {
-				filteredToys.sort(
-					(b1, b2) => b1.name.localeCompare(b2.name) * sortBy.desc
-				)
-			}
-		}
-		return filteredToys
-	})
+async function query(filterBy) {
+	// const queryParams = `?txt=${filterBy.txt}&maxPrice=${filterBy.maxPrice}&inStock=${filterBy.inStock}&sortByCat=${sortBy.sortByCat}&desc=${sortBy.desc}`
+	// return httpService.get(BASE_URL + queryParams)
+	console.log('filterBy from fr:', filterBy)
+	return httpService.get('toy', { params: { filterBy } })
 }
 
-// function query(filterBy = getDefaultFilter()) {
-//     return storageService.query(STORAGE_KEY)
-//         .then(toys => {
-//             if (filterBy.txt) {
-//                 const regex = new RegExp(filterBy.txt, 'i')
-//                 toys = toys.filter(toy => regex.test(toy.vendor))
-//             }
-//             if (filterBy.maxPrice) {
-//                 toys = toys.filter(toy => toy.price <= filterBy.maxPrice)
-//             }
-//             return toys
-//         })
+// function query(filterBy = getDefaultFilter(), sortBy = getDefaultSort()) {
+// 	// const queryParams = `?name=${filterBy.name}&inStock=${filterBy.inStock}&labels=${filterBy.labels}`
+// 	const queryParams = `?name=''&inStock='all'&labels=''`
+// 	console.log('service queryParams', queryParams)
+// 	return httpService.get(BASE_URL + queryParams).then((toys) => {
+// 		let filteredToys = toys
+// 		// Sorting
+// 		if (sortBy) {
+// 			console.log('service', sortBy)
+// 			if (sortBy.sortByCat === 'createdAt' || sortBy.sortByCat === 'price') {
+// 				filteredToys.sort(
+// 					(b1, b2) =>
+// 						(b1[sortBy.sortByCat] - b2[sortBy.sortByCat]) * sortBy.desc
+// 				)
+// 			}
+// 			if (sortBy.sortByCat === 'name') {
+// 				filteredToys.sort(
+// 					(b1, b2) => b1.name.localeCompare(b2.name) * sortBy.desc
+// 				)
+// 			}
+// 		}
+// 		return filteredToys
+// 	})
 // }
 
 function getById(toyId) {
@@ -139,14 +138,16 @@ function remove(toyId) {
 	return httpService.delete(BASE_URL + toyId)
 }
 
-function save(toy) {
+async function save(toy) {
+	var savedToy
 	if (toy._id) {
-		return httpService.put(BASE_URL, toy)
+		savedToy = await httpService.put(BASE_URL + toy._id, toy)
 	} else {
+		toy.owner = userService.getLoggedinUser()
 		// when switching to backend - remove the next line
-		// toy.owner = userService.getLoggedinUser()
-		return httpService.post(BASE_URL, toy)
+		savedToy = await httpService.post(BASE_URL, toy)
 	}
+	return savedToy
 }
 
 // *
@@ -229,13 +230,45 @@ function getToyLabels() {
 // 	return toys
 // }
 
+// async function addToyMsg(toyId, txt) {
+// 	const savedMsg = await httpService.post(`toy/${toyId}/msg`, { txt })
+// 	return savedMsg
+// }
+
 function getEmptyToy() {
 	return {
 		name: 'New Toy',
 		price: 10,
 		labels: [],
 		inStock: true,
+		owner: {},
+		msgs: [],
 	}
+}
+
+// *
+// * MSGS
+// *
+function getEmptyMsg() {
+	return {
+		id: utilService.makeId(),
+		txt: '',
+	}
+}
+
+async function addMsgToToy(toyId, msg) {
+	try {
+		console.log('msg:', msg)
+		const savedMsg = await httpService.post(`toy/${toyId}/msg`, { msg })
+		console.log('savedMsg from toy sre:', savedMsg)
+		return savedMsg
+	} catch (err) {
+		console.log('Cannot add msg to toy:', err)
+	}
+}
+
+async function removeToyMsg(toyId, msgId) {
+	await httpService.delete(`toy/${toyId}/msg/${msgId}`)
 }
 
 // TEST DATA

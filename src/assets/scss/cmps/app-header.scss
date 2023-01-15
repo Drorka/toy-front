@@ -6,6 +6,7 @@ header {
     color: white;
     /* border-bottom: 2px solid white; */
     height: 3rem;
+    height: fit-content;
 }
 
 .header-container {
@@ -28,6 +29,32 @@ header {
     nav a.active {
         color: var(--medium-turk);
         font-weight: bold;
+    }
+
+    .user-info {
+        // background-color: $clr2;
+        // padding: 2px 8px;
+        padding-left: 100px;
+        // color: $clr1;
+
+        .score {
+            // background-color: $clr2;
+            // color: $clr6;
+            padding: 8px;
+            margin: 10px;
+            border-radius: 50%;
+        }
+
+        img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+
+    .user-info .btn-link {
+        // color: $clr2;
     }
 }
 

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 import { ToyPreview } from './toy-preview.jsx'
 
-export function ToyList({ toys, onRemoveToy, onEditToy }) {
+export function ToyList({ toys, onRemoveToy, onAddToyMsg }) {
 	return (
 		<section className="toy-list">
 			<ul className="clean-list grid list-grid">
@@ -14,6 +14,10 @@ export function ToyList({ toys, onRemoveToy, onEditToy }) {
 						<div>
 							<ToyPreview toy={toy} />
 						</div>
+
+						<p>
+							Owner: <span>{toy.owner && toy.owner.fullname}</span>
+						</p>
 
 						<div>
 							<button
@@ -31,6 +35,14 @@ export function ToyList({ toys, onRemoveToy, onEditToy }) {
 
 							<button>
 								<Link to={`/toy/edit/${toy._id}`}>Edit</Link>
+							</button>
+
+							<button
+								onClick={() => {
+									onAddToyMsg(toy)
+								}}
+							>
+								Add toy msg
 							</button>
 						</div>
 					</li>

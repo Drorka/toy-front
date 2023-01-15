@@ -15,6 +15,8 @@ export function ToyPreview({ toy }) {
 		saveToy(toyToEdit)
 	}
 
+	console.log(toy)
+
 	let formattedLabels = toy.labels.toString()
 
 	const imgUrl = 'Furby_picture.jpg'

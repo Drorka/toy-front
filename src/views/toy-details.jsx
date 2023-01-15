@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-// import { showErrorMsg } from '../services/event-bus.service.js'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { utilService } from '../services/util.service'
 import { toyService } from '../services/toy.service'
+import { ToyMsgs } from '../cmps/toy-msg'
 
 export function ToyDetails() {
 	const { toyId } = useParams()
 	const [toy, setToy] = useState(null)
+	const [msg, setMsg] = useState(toyService.getEmptyMsg())
 
 	useEffect(() => {
 		loadToy()
@@ -32,6 +34,39 @@ export function ToyDetails() {
 	// 			// showErrorMsg('Cannot load toy')
 	// 		})
 	// }, [])
+
+	function handleChange({ target }) {
+		console.log(target)
+		let { value, name: field } = target
+		setMsg((prevMsg) => ({ ...prevMsg, [field]: value }))
+	}
+
+	async function onAddToyMsg(ev) {
+		ev.preventDefault()
+		try {
+			console.log('msg de:', msg)
+
+			const savedMsg = await toyService.addMsgToToy(toyId, msg)
+			console.log('savedMsg de:', savedMsg)
+
+			setToy((prevToy) => ({ ...prevToy, msgs: [...prevToy.msgs, savedMsg] }))
+			setMsg(toyService.getEmptyMsg())
+			showSuccessMsg('Msg saved!')
+		} catch (err) {
+			console.log('err', err)
+			showErrorMsg('Cannot save Msg')
+		}
+	}
+
+	async function onRemoveMsg(msgId) {
+		try {
+			await toyService.removeToyMsg(toyId, msgId)
+			loadToy()
+			showSuccessMsg('Msg Removed!')
+		} catch (error) {
+			showErrorMsg('Cannot remove Msg')
+		}
+	}
 
 	const imgUrl = 'Furby_picture.jpg'
 
@@ -62,6 +97,29 @@ export function ToyDetails() {
 				<div className="toy-details-img">
 					<img src={require(`../assets/img/${imgUrl}`)} alt="" />
 				</div>
+			</div>
+			<div className="add-msg-section">
+				<form onSubmit={onAddToyMsg}>
+					<label htmlFor="toyMsg">Add toy msg:</label>
+					<input
+						type="text"
+						name="txt"
+						id="toyMsg"
+						value={msg.txt}
+						onChange={handleChange}
+					/>
+
+					<button className="btn clean-btn">Add</button>
+				</form>
+			</div>
+
+			<hr />
+			<div className="show-msg-section">
+				{!toy.msgs ? (
+					<h3>No msgs yet</h3>
+				) : (
+					<ToyMsgs toy={toy} onRemoveMsg={onRemoveMsg} />
+				)}
 			</div>
 			<div className="toy-details-actions">
 				<button>

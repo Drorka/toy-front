@@ -97,12 +97,21 @@ export function ToyIndex() {
 			})
 	}
 
+	function onAddToyMsg(toy) {
+		console.log(`TODO Adding msg to toy`)
+	}
+
 	return (
 		<section className="toy-index main-layout">
 			{/* <ToyFilter onSetFilter={onSetFilter} onSetSort={onSetSort} /> */}
 			<main className="main-content-container flex">
 				<SideBar onSetFilter={onSetFilter} onSetSort={onSetSort} />
-				<ToyList toys={toys} onRemoveToy={onRemoveToy} onEditToy={onEditToy} />
+				<ToyList
+					toys={toys}
+					onRemoveToy={onRemoveToy}
+					onEditToy={onEditToy}
+					onAddToyMsg={onAddToyMsg}
+				/>
 			</main>
 		</section>
 	)
