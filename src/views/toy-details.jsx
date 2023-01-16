@@ -5,6 +5,7 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { utilService } from '../services/util.service'
 import { toyService } from '../services/toy.service'
 import { ToyMsgs } from '../cmps/toy-msg'
+import { ChatApp } from '../cmps/chat'
 
 export function ToyDetails() {
 	const { toyId } = useParams()
@@ -35,14 +36,13 @@ export function ToyDetails() {
 	// 		})
 	// }, [])
 
-	function handleChange({ target }) {
-		console.log(target)
-		let { value, name: field } = target
-		setMsg((prevMsg) => ({ ...prevMsg, [field]: value }))
-	}
+	// function handleChange({ target }) {
+	// 	console.log(target)
+	// 	let { value, name: field } = target
+	// 	setMsg((prevMsg) => ({ ...prevMsg, [field]: value }))
+	// }
 
-	async function onAddToyMsg(ev) {
-		ev.preventDefault()
+	async function onAddToyMsg(msg) {
 		try {
 			console.log('msg de:', msg)
 
@@ -98,7 +98,12 @@ export function ToyDetails() {
 					<img src={require(`../assets/img/${imgUrl}`)} alt="" />
 				</div>
 			</div>
-			<div className="add-msg-section">
+
+			<div className="chat-container">
+				<ChatApp toy={toy} onAddToyMsg={onAddToyMsg} />
+			</div>
+
+			{/* <div className="add-msg-section">
 				<form onSubmit={onAddToyMsg}>
 					<label htmlFor="toyMsg">Add toy msg:</label>
 					<input
@@ -111,16 +116,16 @@ export function ToyDetails() {
 
 					<button className="btn clean-btn">Add</button>
 				</form>
-			</div>
+			</div> */}
 
-			<hr />
-			<div className="show-msg-section">
+			{/* <div className="show-msg-section">
 				{!toy.msgs ? (
 					<h3>No msgs yet</h3>
 				) : (
 					<ToyMsgs toy={toy} onRemoveMsg={onRemoveMsg} />
 				)}
-			</div>
+			</div> */}
+
 			<div className="toy-details-actions">
 				<button>
 					<Link to={`/toy/edit/${toy._id}`}>Edit Toy</Link>
